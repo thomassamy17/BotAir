@@ -33,7 +33,6 @@ class Motion(IMotion):
             self.canvas.update()
             return True
         else:
-            self.rotate()
             return False
         
     # IMotion méthode Rotate
@@ -50,13 +49,15 @@ class Motion(IMotion):
     # Méthode Scan
     def scan(self):
         if self.direction==DIRECTION[0]:
-            self.move(self.botair[1][0]+1,self.botair[1][1])
+            res=self.move(self.botair[1][0]+1,self.botair[1][1])
         elif self.direction==DIRECTION[1]:
-            self.move(self.botair[1][0],self.botair[1][1]+1)
+            res=self.move(self.botair[1][0],self.botair[1][1]+1)
         elif self.direction==DIRECTION[2]:
-            self.move(self.botair[1][0]-1,self.botair[1][1])
+            res=self.move(self.botair[1][0]-1,self.botair[1][1])
         else:
-            self.move(self.botair[1][0],self.botair[1][1]-1)
+            res=self.move(self.botair[1][0],self.botair[1][1]-1)
+        if res == False:
+            self.rotate()
         time.sleep(0.1)
         self.scan()
     # Constructeur
@@ -68,7 +69,6 @@ class Motion(IMotion):
         self.listeCases = []
         self.grille()
         self.botair = [self.canvas.create_rectangle(22,22,33,33,outline="red",fill="white"),[2,2]]
-        self.scan()
         
     
     # Méthode pour initialiser la grille
@@ -104,7 +104,6 @@ class Motion(IMotion):
 # Création du widget principal ("maître") :
 fen = Tk()
 fen.title("BotAir Simulation / SAMY HOLEC")
-
 # Création des widgets "esclaves" :
 canvas = Canvas(fen,bg='dark grey',height=737,width=737)
 canvas.pack(side=LEFT,padx=11)
