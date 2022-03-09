@@ -8,6 +8,7 @@ import time
 #################
 
 DIRECTION = ["DROITE", "BAS", "GAUCHE", "HAUT"]
+CASE_SIZE = 11
 
 # Interface IMotion
 class IMotion():
@@ -27,7 +28,7 @@ class Motion(IMotion):
         textCase = self.canvas.itemcget(case,"text")
         if textCase == "0":
             self.canvas.itemconfigure(case,text="1")
-            self.canvas.move(self.botair[0],(x-self.botair[1][0])*11,(y-self.botair[1][1])*11)
+            self.canvas.move(self.botair[0],(x-self.botair[1][0])*CASE_SIZE,(y-self.botair[1][1])*CASE_SIZE)
             self.botair[1][0]=x
             self.botair[1][1]=y
             self.canvas.update()
@@ -78,35 +79,35 @@ class Motion(IMotion):
             for y in range(67):
                 if x == 0 or y == 0 :
                     self.canvas.create_rectangle(
-                        x * 11,
-                        y * 11,
-                        x * 11 + 11,
-                        y * 11 + 11,
+                        x * CASE_SIZE,
+                        y * CASE_SIZE,
+                        x * CASE_SIZE + CASE_SIZE,
+                        y * CASE_SIZE + CASE_SIZE,
                         fill="white", outline="white"
                     )
                 else:
                     self.canvas.create_rectangle(
-                        x * 11,
-                        y * 11,
-                        x * 11 + 11,
-                        y * 11 + 11,
+                        x * CASE_SIZE,
+                        y * CASE_SIZE,
+                        x * CASE_SIZE + CASE_SIZE,
+                        y * CASE_SIZE + CASE_SIZE,
                         fill="white", outline="black"
                     )                       
                     if x == 1 or y == 1 or x == 66 or y == 66 :
-                        text=self.canvas.create_text(((x * 11)+5,(y * 11)+5),font=("Purisa", 9), text="-1")
+                        text=self.canvas.create_text(((x * CASE_SIZE)+5,(y * CASE_SIZE)+5),font=("Purisa", 9), text="-1")
                     elif x == 2 and y == 2 :
-                        text=self.canvas.create_text(((x * 11)+5,(y * 11)+5),font=("Purisa", 9), text="1")
+                        text=self.canvas.create_text(((x * CASE_SIZE)+5,(y * CASE_SIZE)+5),font=("Purisa", 9), text="1")
                     else:
-                        text=self.canvas.create_text(((x * 11)+5,(y * 11)+5),font=("Purisa", 9), text="0")
+                        text=self.canvas.create_text(((x * CASE_SIZE)+5,(y * CASE_SIZE)+5),font=("Purisa", 9), text="0")
                     self.listeCases[x][y] = text
             
     
 # Création du widget principal ("maître") :
 fen = Tk()
 fen.title("BotAir Simulation / SAMY HOLEC")
-# Création des widgets "esclaves" :
+# Création des widgets ("esclaves") :
 canvas = Canvas(fen,bg='dark grey',height=737,width=737)
-canvas.pack(side=LEFT,padx=11)
+canvas.pack(side=LEFT,padx=10)
 
 v = StringVar()
 d = Motion(canvas,v)
