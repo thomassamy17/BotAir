@@ -70,6 +70,7 @@ class Motion(IMotion):
         self.listeCases = []
         self.grille()
         self.botair = [self.canvas.create_rectangle(22,22,33,33,outline="red",fill="white"),[2,2]]
+        self.scan()
         
     
     # Méthode pour initialiser la grille
